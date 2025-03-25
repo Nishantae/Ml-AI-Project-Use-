@@ -1,0 +1,17 @@
+from sentence_transformers import SentenceTransformer
+import faiss
+import numpy as np
+
+# Initialize model and FAISS index
+model = SentenceTransformer('all-MiniLM-L6-v2')
+index = faiss.read_index('your_index_file.index')  # Load your FAISS index
+
+# Function to encode query and retrieve top-N relevant passages
+def retrieve_relevant_passages(query, top_n=5):
+    # Convert the query into an embedding
+    query_embedding = model.encode([query])
+    
+    # Search the FAISS index for the top-N closest passages
+    distances, indices = index.search(np.array(query_embedding).astype('float32'), top_n)
+    
+    return distances, indices
