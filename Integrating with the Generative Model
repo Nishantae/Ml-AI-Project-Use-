@@ -1,0 +1,19 @@
+import openai
+
+# Set your OpenAI API key
+openai.api_key = 'your-openai-api-key'
+
+# Function to generate an answer using GPT-3
+def generate_answer(query, retrieved_passages):
+    context = " ".join(retrieved_passages)  # Concatenate top-N passages as context
+    prompt = f"Question: {query}\nContext: {context}\nAnswer:"
+    
+    # Generate response from GPT-3
+    response = openai.Completion.create(
+        engine="text-davinci-003",  # Use the appropriate model (GPT-3.5 or GPT-4)
+        prompt=prompt,
+        max_tokens=150,
+        temperature=0.7
+    )
+    
+    return response.choices[0].text.strip()
