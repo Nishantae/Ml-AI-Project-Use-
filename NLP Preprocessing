@@ -1,0 +1,25 @@
+import spacy
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import string
+
+
+# Initialize Spacy NLP model
+nlp = spacy.load('en_core_web_sm')
+
+
+
+# NLP Preprocessing function
+def preprocess_text(text):
+    # Clean text
+    text = text.lower()
+    text = ''.join([char for char in text if char not in string.punctuation])
+    tokens = word_tokenize(text)
+    tokens = [word for word in tokens if word not in stopwords.words('english')]
+
+
+# Named Entity Recognition (NER)
+    doc = nlp(text)
+    entities = [ent.text for ent in doc.ents]
+    
+    return tokens, entities
