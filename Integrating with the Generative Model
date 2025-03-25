@@ -17,3 +17,10 @@ def generate_answer(query, retrieved_passages):
     )
     
     return response.choices[0].text.strip()
+
+
+# Example: Use the function with a query and retrieved passages
+query = "What is the capital of France?"
+retrieved_passages = ["Paris is the capital of France.", "The capital city of France is Paris, known for its culture and history."]
+answer = generate_answer(query, retrieved_passages)
+print(answer)
