@@ -1,0 +1,19 @@
+import faiss
+import numpy as np
+
+# Create a FAISS index
+def create_faiss_index(embeddings):
+    dimension = len(embeddings[0])  # Get the dimensionality of embeddings
+    index = faiss.IndexFlatL2(dimension)  # L2 distance index
+    
+    # Convert embeddings to numpy array
+    embeddings_np = np.array(embeddings).astype('float32')
+
+# Add embeddings to the FAISS index
+    index.add(embeddings_np)
+    return index
+
+# Search the FAISS index
+def search_index(index, query_embedding, top_k=5):
+    distances, indices = index.search(np.array([query_embedding]).astype('float32'), top_k)
+    return distances, indices
